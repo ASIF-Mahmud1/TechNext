@@ -5,17 +5,18 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import TopBar from './home/container/TopBar'
+import UploadCSV from './employee/component/UploadCSV'
 export default function MainRouter() {
   return (
     <Router>
       <div>
-        <Authenticate>
+        <TopBar>
             <Routes>
-              {/* <Route path="/" element={ <TabSection />}/> */}
+              <Route path="/" element={ <UploadCSV />}/>
              
             </Routes>
-        </Authenticate>
+        </TopBar>
       </div>
       
     </Router>

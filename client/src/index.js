@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import theme from './theme'
+import MainRouter from './MainRouter'
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>   
+       <MainRouter />
+    </ThemeProvider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

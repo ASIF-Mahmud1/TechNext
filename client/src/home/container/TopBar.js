@@ -14,7 +14,7 @@ export default function ButtonAppBar({children}) {
    
 
   return (
-   <LogContext.Provider value= {value}>
+
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -32,6 +32,6 @@ export default function ButtonAppBar({children}) {
       </AppBar>
       {children}
     </Box>
-    </LogContext.Provider>
+   
   );
 }
