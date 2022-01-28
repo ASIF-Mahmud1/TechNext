@@ -43,6 +43,18 @@ export default function Signin(props) {
         <CardActions>
           <Button color="primary" variant="contained"  className={classes.submit}>Upload CSV file</Button>
         </CardActions>
+        <CardContent>
+          <Typography variant="h6">
+            Summary
+          </Typography>
+          <Typography > Total:{} </Typography>
+          <Typography > Valid :{} </Typography>
+          <Typography > Invalid:{} </Typography>
+
+          <CardActions>
+          <Button color="primary" variant="contained"  className={classes.submit}>Submit</Button>
+        </CardActions>
+        </CardContent>
       </Card>
     )
 }
