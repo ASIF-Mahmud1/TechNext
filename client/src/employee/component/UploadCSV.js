@@ -46,11 +46,32 @@ export default function Signin(props) {
 
   const [highlighted, setHighlighted] = React.useState(false);
   const [contacts, setContacts] = React.useState([
-    { email: "fake@gmail.com", name: "Fake" },
+   
   ]);
-  console.log("my contacts ",contacts);
+  const [totalRows, setRows]= React.useState(0)
+  const [validRows, setValidRows]= React.useState(0)
+  //console.log("my contacts ",contacts);
   const classes = useStyles()
- 
+
+ const handleFileUpload=(e)=>{
+     e.preventDefault();
+     setHighlighted(false);
+
+   Array.from(e.dataTransfer.files)
+     .filter((file) => file.type === "text/csv")
+     .forEach(async (file) => {
+       const text = await file.text();
+       const result = parse(text, { header: true });
+       //////////////////////////////////////////////////////////
+       const finalResult= result.data.filter((item)=> item['first name'] && item['last name']&& item.email ).map((item)=> { return {  'firstName': item['first name'],'lastName': item['last name'], 'email' : item['email'] }})
+       console.log("my final result ",finalResult);
+       ///////////////////////////////////////////////////////////
+       setContacts((existing) => [...existing, ...finalResult]);
+       setRows(result.data.length )
+       setValidRows(finalResult.length)
+       console.log("Data is ", result);
+     });
+ }
   return (
       <Card className={classes.card}>
         <CardContent>
@@ -73,16 +94,7 @@ export default function Signin(props) {
           e.preventDefault();
         }}
         onDrop={(e) => {
-          e.preventDefault();
-          setHighlighted(false);
-
-          Array.from(e.dataTransfer.files)
-            .filter((file) => file.type === "text/csv")
-            .forEach(async (file) => {
-              const text = await file.text();
-              const result = parse(text, { header: true });
-              setContacts((existing) => [...existing, ...result.data]);
-            });
+          handleFileUpload(e)
         }}
       >
        <Typography style={{color:"white", fontSize:30}}> DROP HERE</Typography>
@@ -92,12 +104,12 @@ export default function Signin(props) {
           <Typography variant="h6">
             Summary
           </Typography>
-          <Typography > Total:{} </Typography>
-          <Typography > Valid :{} </Typography>
-          <Typography > Invalid:{} </Typography>
+          <Typography > Total:{totalRows} </Typography>
+          <Typography > Valid :{validRows} </Typography>
+          <Typography > Invalid:{totalRows-validRows} </Typography>
 
           <CardActions>
-          <Button color="primary" variant="contained"  className={classes.submit}>Submit</Button>
+          <Button disabled={validRows===0} color="primary" variant="contained"  className={classes.submit}>Submit Details</Button>
         </CardActions>
         </CardContent>
         <CardContent>
@@ -105,7 +117,7 @@ export default function Signin(props) {
       <ul>
         {contacts.map((contact) => (
           <li key={contact.email}>
-            <strong>{contact.name}</strong>: {contact.email}
+            <strong>{contact['firstName']}{" "} {contact['lastName']}</strong>: {contact.email}
           </li>
         ))}
       </ul>
