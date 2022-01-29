@@ -9,6 +9,7 @@ import TopBar from './home/container/TopBar'
 import UploadCSV from './employee/component/UploadCSV'
 import Employee from './employee/component/Employee'
 import SendEmail from './employee/component/SendEmail'
+import SearchEmployee from './employee/component/SearchEmployee'
 export default function MainRouter() {
   return (
     <Router>
@@ -17,7 +18,8 @@ export default function MainRouter() {
             <Routes>
               {/* <Route path="/" element={ <UploadCSV />}/> */}
               {/* <Route path ="/" element ={<Employee/>} />  */}
-              <Route path="/" element={<SendEmail/>  }  />
+              {/* <Route path="/" element={<SendEmail/>  }  /> */}
+              <Route path="/" element={ <SearchEmployee/> }  />
             </Routes>
         </TopBar>
       </div>
