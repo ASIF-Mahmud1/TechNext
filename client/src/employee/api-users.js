@@ -87,11 +87,27 @@ const multiCreate = async (users) => {
       console.log(err)
     }
   }
-  
+
+  const searchUser = async (payload) => {
+    try {
+        let response = await fetch('http://localhost:5000/api/users/search', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+      return await response.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
   export {
       create,
       multiCreate,
       list,
       paginateList,
-      sendEmail
+      sendEmail,
+      searchUser
   }
