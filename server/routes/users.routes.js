@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-    
+       const {firstName,lastName,email}=req.body
       const newUser = await pool.query(
         'INSERT INTO users (firstName, lastName, email) VALUES ($1,$2,$3) RETURNING *'
-        , [req.body.firstName, req.body.lastName, req.body.email]);
+        , [firstName, lastName, email]);
      
       res.json(newUser.rows[0]);
 
