@@ -4,6 +4,7 @@ import {Button,Typography,TextField,Card,CardActions,CardContent,Icon,} from '@m
 import {makeStyles}  from '@mui/styles';
 import { parse } from "papaparse";
 import {validateEmail}from '../../helper/helper'
+import {multiCreate} from '../api-users'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -68,10 +69,28 @@ export default function Signin(props) {
        console.log("my final result ",finalResult);
        ///////////////////////////////////////////////////////////
        setContacts((existing) => [...existing, ...finalResult]);
-       setRows(result.data.length )
-       setValidRows(finalResult.length)
+       setRows(result.data )
+       setValidRows(finalResult)
        console.log("Data is ", result);
+
      });
+ }
+
+ const handleSubmit=()=>{
+       ///////////////////////////////////////////////////////////
+       const body= {
+         users: validRows
+       }
+       multiCreate(body).then((data) => {
+        if (data.error) {
+          console.log("error ",data.error);
+          //setValues({ ...values, error: data.error})
+        } else {
+          //setValues({ ...values, error: '', open: true})
+          console.log(data);
+        }
+      })
+       //////////////////////////////////////////////////////////
  }
   return (
       <Card className={classes.card}>
@@ -105,12 +124,12 @@ export default function Signin(props) {
           <Typography variant="h6">
             Summary
           </Typography>
-          <Typography > Total:{totalRows} </Typography>
-          <Typography > Valid :{validRows} </Typography>
-          <Typography > Invalid:{totalRows-validRows} </Typography>
+          <Typography > Total:{totalRows.length} </Typography>
+          <Typography > Valid :{validRows.length} </Typography>
+          <Typography > Invalid:{totalRows.length-validRows.length} </Typography>
 
           <CardActions>
-          <Button disabled={validRows===0} color="primary" variant="contained"  className={classes.submit}>Submit Details</Button>
+          <Button disabled={validRows===0} color="primary" variant="contained"  className={classes.submit} onClick={handleSubmit} >Submit Details</Button>
         </CardActions>
         </CardContent>
         <CardContent>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-//import {create} from './api-user.js'
+import {create} from '../api-users'
 import {Button,Typography,TextField,Card,CardActions,CardContent,Icon} from '@mui/material';
 import {makeStyles}  from '@mui/styles';
 import {validateEmail}from '../../helper/helper'
@@ -50,16 +50,16 @@ export default function Signup() {
       lastName: values.lastName || undefined,
       email: values.email || undefined
     }
-    console.log(user);
 
-    // create(user).then((data) => {
-    //   if (data.error) {
-    //     setValues({ ...values, error: data.error})
-    //   } else {
-    //     //setValues({ ...values, error: '', open: true})
-    //     console.log(data);
-    //   }
-    // })
+    create(user).then((data) => {
+      if (data.error) {
+        console.log("error ",data.error);
+        setValues({ ...values, error: data.error})
+      } else {
+        //setValues({ ...values, error: '', open: true})
+        console.log(data);
+      }
+    })
   }
    
   const enableSubmit= values.firstName &&values.firstName && values.email && validateEmail(values.email)
