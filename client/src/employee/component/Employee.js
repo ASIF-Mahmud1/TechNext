@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState,useEffect} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,20 +7,30 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Button,Typography} from '@mui/material'
+import {paginateList} from '../api-users'
 
-function createData( firstName, lastName, email ) {
-  return {  firstName, lastName, email  };
-}
-
-const rows = [
-  createData( "Asif", "Mahmud","asif@gamil.com" ),
-  createData( "Sushi", "Kao","sushi@gamil.com" ), 
-  createData( "Mushi", "Mao","mushi@gamil.com" ),
-  createData( "Harry", "Potter","potter@gamil.com" ),
-  createData( "Batman", "Dark Knight","batman@gamil.com" ),
-];
 
 export default function BasicTable() {
+  const [rows,setRows]= useState([])
+const [pageNumber,setPageNumber]= useState(1)
+const [showNextButton,setShowNextButton]= useState(false)
+
+useEffect(()=>{
+ paginateList(pageNumber).then((data) => {
+  if (data.error) {
+    console.log("error ",data.error);
+  //  setValues({ ...values, error: data.error})
+  } else {
+     setRows(data.users)
+     setShowNextButton(data.showNextButton)
+    console.log(data);
+  }
+})
+},[pageNumber])
+
+ const clickNextBtn=(value)=>{
+  setPageNumber((current)=> current+value)
+ }
   return (
     <TableContainer component={Paper} >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -28,22 +38,22 @@ export default function BasicTable() {
           <TableRow>
             <TableCell>Serial No.</TableCell>
             <TableCell align="right">First Name</TableCell>
-            <TableCell align="right">Last Name&nbsp;(g)</TableCell>
-            <TableCell align="right">Email&nbsp;(g)</TableCell>
+            <TableCell align="right">Last Name</TableCell>
+            <TableCell align="right">Email</TableCell>
            
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row,index) => (
             <TableRow
-              key={row.name}
+              key={row.email}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {index+1}
+                {row.userid}
               </TableCell>
-              <TableCell align="right">{row.firstName}</TableCell>
-              <TableCell align="right">{row.lastName}</TableCell>
+              <TableCell align="right">{row.firstname}</TableCell>
+              <TableCell align="right">{row.lastname}</TableCell>
               <TableCell align="right">{row.email}</TableCell>
             
             </TableRow>
@@ -51,10 +61,10 @@ export default function BasicTable() {
         </TableBody>
       </Table>
   
-        <Button>
+        <Button disabled={pageNumber===1} onClick={()=>clickNextBtn(-1)}>
             <Typography variant="contained">Previous</Typography>
         </Button>
-        <Button>
+        <Button disabled={!showNextButton} onClick={()=>clickNextBtn(1)}>
             <Typography variant="contained">Next</Typography>
         </Button>    
        

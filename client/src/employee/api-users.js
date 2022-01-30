@@ -50,11 +50,21 @@ const multiCreate = async (users) => {
     }
   }
 
-  const list = async (signal) => {
+  const list = async () => {
     try {
       let response = await fetch('/api/users/', {
-        method: 'GET',
-        signal: signal,
+        method: 'GET'
+      })
+      return await response.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const paginateList = async (pageNumber) => {
+    try {
+      let response = await fetch('http://localhost:5000/api/users/'+pageNumber, {
+        method: 'GET'
       })
       return await response.json()
     } catch(err) {
@@ -65,5 +75,6 @@ const multiCreate = async (users) => {
   export {
       create,
       multiCreate,
-      list
+      list,
+      paginateList
   }
