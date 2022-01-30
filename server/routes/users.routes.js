@@ -15,10 +15,7 @@ router.get('/', async (req, res) => {
     res.status(500).json({error: error.message});
   }
 });
-/**
-   LIMIT PageSize
-   OFFSET ((PageNumber-1) * PageSize);
- */
+
 router.get('/:pageNumber', async (req, res) => {
   try {
     const {pageNumber }= req.params
@@ -27,6 +24,29 @@ router.get('/:pageNumber', async (req, res) => {
     const totalUsers= await pool.query('SELECT COUNT(*) FROM users');
     const users = await pool.query(`SELECT * FROM users Order By userId LIMIT ${pageSize} OFFSET  ${((pageNumber-1) * pageSize)}`);
     res.json({users : users.rows, showNextButton: totalUsers.rows[0].count> pageSize*pageNumber});
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+});
+
+router.get('/:pageNumber', async (req, res) => {
+  try {
+    const {pageNumber }= req.params
+    const pageSize= 2
+
+    const totalUsers= await pool.query('SELECT COUNT(*) FROM users');
+    const users = await pool.query(`SELECT * FROM users Order By userId LIMIT ${pageSize} OFFSET  ${((pageNumber-1) * pageSize)}`);
+    res.json({users : users.rows, showNextButton: totalUsers.rows[0].count> pageSize*pageNumber});
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+});
+
+router.post('/search', async (req, res) => {
+  try {
+    const query= Object.keys(req.body)[0]
+    const users = await pool.query(`SELECT * FROM users  WHERE LOWER (${query}) = $1`,[req.body[query].toLowerCase()]);
+    res.json(users.rows);
   } catch (error) {
     res.status(500).json({error: error.message});
   }
