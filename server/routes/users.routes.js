@@ -1,6 +1,7 @@
 import express from 'express';
 import pool from '../db.js';
 import format  from 'pg-format'
+import nodemailer from 'nodemailer' 
 
 
 const router = express.Router();
@@ -16,18 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:pageNumber', async (req, res) => {
-  try {
-    const {pageNumber }= req.params
-    const pageSize= 2
 
-    const totalUsers= await pool.query('SELECT COUNT(*) FROM users');
-    const users = await pool.query(`SELECT * FROM users Order By userId LIMIT ${pageSize} OFFSET  ${((pageNumber-1) * pageSize)}`);
-    res.json({users : users.rows, showNextButton: totalUsers.rows[0].count> pageSize*pageNumber});
-  } catch (error) {
-    res.status(500).json({error: error.message});
-  }
-});
 
 router.get('/:pageNumber', async (req, res) => {
   try {
@@ -80,5 +70,40 @@ router.post('/multi-insert', async (req, res) => {
       res.status(500).json({ error: error.message })
     }
   })
+  
+  router.post('/sendEmails', async (req, res) => {
+    try {
+     
+     ////////////////////////////////////////////////////////////////////////////////////
+      var transporter = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user:process.env.user,
+          pass: process.env.pass
+        }
+      });
+  
+      var mailOptions = {
+        from: 'g-shock@@gmail.com',
+        to: req.body.emails,
+        subject: 'G Shock Annual Meeting ',
+        html: `<h1>Hello!</h1><p>You are invited to join the  G Shock virtual Annual Meeting 2022</p><p>We hope to see you ! </>`
+      };
+  
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.json(info)
+        }
+      });
+  
+     ////////////////////////////////////////////////////////////////////////////////////
+    } catch (error) {
+      res.status(500).json({error: error.message});
+    }
+  });
 
 export default router;
