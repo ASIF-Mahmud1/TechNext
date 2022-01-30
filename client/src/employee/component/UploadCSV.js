@@ -3,6 +3,7 @@ import {Navigate as Redirect} from 'react-router-dom'
 import {Button,Typography,TextField,Card,CardActions,CardContent,Icon,} from '@mui/material';
 import {makeStyles}  from '@mui/styles';
 import { parse } from "papaparse";
+import {validateEmail}from '../../helper/helper'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -63,7 +64,7 @@ export default function Signin(props) {
        const text = await file.text();
        const result = parse(text, { header: true });
        //////////////////////////////////////////////////////////
-       const finalResult= result.data.filter((item)=> item['first name'] && item['last name']&& item.email ).map((item)=> { return {  'firstName': item['first name'],'lastName': item['last name'], 'email' : item['email'] }})
+       const finalResult= result.data.filter((item)=> item['first name'] && item['last name']&& item.email && validateEmail(item.email.trim()) ).map((item)=> { return {  'firstName': item['first name'],'lastName': item['last name'], 'email' : item['email'].trim() }})
        console.log("my final result ",finalResult);
        ///////////////////////////////////////////////////////////
        setContacts((existing) => [...existing, ...finalResult]);

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 //import {create} from './api-user.js'
 import {Button,Typography,TextField,Card,CardActions,CardContent,Icon} from '@mui/material';
 import {makeStyles}  from '@mui/styles';
+import {validateEmail}from '../../helper/helper'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -61,7 +62,7 @@ export default function Signup() {
     // })
   }
    
-  const enableSubmit= values.firstName &&values.firstName && values.email
+  const enableSubmit= values.firstName &&values.firstName && values.email && validateEmail(values.email)
     return (<div>
       <Card className={classes.card}>
         <CardContent>
