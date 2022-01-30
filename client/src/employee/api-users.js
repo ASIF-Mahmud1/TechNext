@@ -52,7 +52,7 @@ const multiCreate = async (users) => {
 
   const list = async () => {
     try {
-      let response = await fetch('/api/users/', {
+      let response = await fetch('http://localhost:5000/api/users', {
         method: 'GET'
       })
       return await response.json()
@@ -72,9 +72,26 @@ const multiCreate = async (users) => {
     }
   }
 
+  const sendEmail = async (payload) => {
+    try {
+        let response = await fetch('http://localhost:5000/api/users/sendEmails', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+      return await response.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  
   export {
       create,
       multiCreate,
       list,
-      paginateList
+      paginateList,
+      sendEmail
   }

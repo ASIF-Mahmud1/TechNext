@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Button,Typography,TextField,Card,CardActions,CardContent,  Checkbox, Icon,ListItem, ListItemSecondaryAction, List,IconButton,ListItemText,ListItemAvatar, Paper} from '@mui/material';
 import {makeStyles}  from '@mui/styles';
+import {list,sendEmail} from '../api-users'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -39,20 +40,40 @@ export default function Signup() {
   })
 
   const  [users, setUsers]=useState([])
-  const [selectedUsers, setSelectedUsers]= useState([])
   useEffect(()=>{
-    const user=[{name:"Asif",email:"asif@gmail.com"},{name:"Legend",email: 'legend@gmail.com'}]
 
-   // make api call to get list os users
-   setUsers(user)
+   list().then((data) => {
+    if (data.error) {
+      console.log("error ",data.error);
+    //  setValues({ ...values, error: data.error})
+    } else {
+      setUsers(data.users)
+
+    }
+  })
   },[])
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
   }
 
   const clickSubmit = () => {
-      const result= users.filter((item)=> item.checked===true)
+      const emails= users.filter((item)=> item.checked===true).map((item)=>item.email)
+      const result={
+        emails: emails,
+        subject: values.subject,
+        body: values.body
+      }
       console.log("Send to server ",result);
+      sendEmail(result).then((data) => {
+        if (data.error) {
+          console.log("error ",data.error);
+        //  setValues({ ...values, error: data.error})
+        } else {
+          //setUsers(data.users)
+          console.log("result ",data);
+    
+        }
+      })
   }
 
 
@@ -78,7 +99,7 @@ export default function Signup() {
        setUsers([...result])
     }
 
-
+    const enableBtn= users.filter((item)=> item.checked===true).length>0 && values.subject && values.body
 
     return (<Paper>
       <Card className={classes.card}>
@@ -95,7 +116,7 @@ export default function Signup() {
           }
         </CardContent>
         <CardActions>
-          <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
+          <Button disabled={!enableBtn} color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Send Email</Button>
         </CardActions>
       </Card>
 
@@ -108,12 +129,9 @@ export default function Signup() {
                       
                       </ListItemAvatar>
                       <IconButton>
-                          {/* {
-                              item.checked ?<Typography> Already Selected</Typography> :<Typography>Select me{ item.checked}</Typography>
-                          } */}
                          <Checkbox  />
                       </IconButton>
-                      <ListItemText primary={item.name}/>
+                      <ListItemText primary={item.firstname+" "+ item.lastname} secondary={item.email}/>
                       <ListItemSecondaryAction>
                      
                       </ListItemSecondaryAction>

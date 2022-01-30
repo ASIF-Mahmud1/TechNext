@@ -87,8 +87,9 @@ router.post('/multi-insert', async (req, res) => {
       var mailOptions = {
         from: 'g-shock@@gmail.com',
         to: req.body.emails,
-        subject: 'G Shock Annual Meeting ',
-        html: `<h1>Hello!</h1><p>You are invited to join the  G Shock virtual Annual Meeting 2022</p><p>We hope to see you ! </>`
+        subject: req.body.subject,
+        text: req.body.body 
+       // html: `<h1>Hello!</h1><p>You are invited to join the  G Shock virtual Annual Meeting 2022</p><p>We hope to see you ! </>`
       };
   
       transporter.sendMail(mailOptions, function (error, info) {
