@@ -11,8 +11,8 @@ CREATE TABLE users(
 
 
 
--- su - postgres
---psql -U postgres
---\c technext
---\dt
+--    su - postgres
+--    psql -U postgres
+--    \c technext
+--    \dt
 

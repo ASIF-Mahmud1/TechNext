@@ -70,6 +70,7 @@ export default function Signup() {
         //  setValues({ ...values, error: data.error})
         } else {
           //setUsers(data.users)
+          alert("Email sent succesfully! ")
           console.log("result ",data);
     
         }
