@@ -77,10 +77,12 @@ export default function Signin(props) {
        multiCreate(body).then((data) => {
         if (data.error) {
           console.log("error ",data.error);
+          alert(data.error)
           //setValues({ ...values, error: data.error})
         } else {
           //setValues({ ...values, error: '', open: true})
           console.log(data);
+          alert("Saved Succefully!")
         }
       })
        //////////////////////////////////////////////////////////

@@ -19,6 +19,7 @@ useEffect(()=>{
  paginateList(pageNumber).then((data) => {
   if (data.error) {
     console.log("error ",data.error);
+    alert(data.error)
   //  setValues({ ...values, error: data.error})
   } else {
      setRows(data.users)

@@ -51,11 +51,13 @@ export default function Signup() {
 
     create(user).then((data) => {
       if (data.error) {
-        console.log("error ",data.error);
-        setValues({ ...values, error: data.error})
+        // console.log("error ",data.error);
+        // setValues({ ...values, error: data.error})
+        alert(data.error)
       } else {
         //setValues({ ...values, error: '', open: true})
         console.log(data);
+        alert("Saved Succefully!")
       }
     })
   }

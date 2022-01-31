@@ -43,6 +43,7 @@ export default function Signup() {
    list().then((data) => {
     if (data.error) {
       console.log("error ",data.error);
+      alert(data.error)
     //  setValues({ ...values, error: data.error})
     } else {
       setUsers(data.users)
@@ -65,6 +66,7 @@ export default function Signup() {
       sendEmail(result).then((data) => {
         if (data.error) {
           console.log("error ",data.error);
+          alert(data.error)
         //  setValues({ ...values, error: data.error})
         } else {
           //setUsers(data.users)
