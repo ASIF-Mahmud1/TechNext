@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 router.get('/:pageNumber', async (req, res) => {
   try {
     const {pageNumber }= req.params
-    const pageSize= 2
+    const pageSize= 5
 
     const totalUsers= await pool.query('SELECT COUNT(*) FROM users');
     const users = await pool.query(`SELECT * FROM users Order By userId LIMIT ${pageSize} OFFSET  ${((pageNumber-1) * pageSize)}`);
