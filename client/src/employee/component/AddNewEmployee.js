@@ -7,7 +7,7 @@ import {
   } from "react-router-dom";
   import React, {useState, useEffect} from 'react'
   import {Navigate as Redirect} from 'react-router-dom'
-  import {Button,Typography,TextField,Card,CardActions,CardContent,Icon,} from '@mui/material';
+  import {Button,Typography,Grid,TextField,Card,CardActions,CardContent,Icon,} from '@mui/material';
   import {makeStyles}  from '@mui/styles';
   
   
@@ -34,6 +34,9 @@ import {
     submit: {
       margin: 'auto',
       marginBottom: theme.spacing(2)
+    },
+    gridItem:{
+      marginBottom:20
     }
   }))
   
@@ -43,27 +46,37 @@ import {
   
   
       return (
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h6" className={classes.title}>
-              Welcome To the Application!
-            </Typography>
-            
-  
-          <CardActions style={{ paddingLeft:120}}>
-           <Link to="/form">
-            <Button color="primary" variant="contained" >
-              <Typography>Fillup Form </Typography>
-            </Button>
-          </Link>
-          <Link to="/byCsv">
-            <Button color="primary" variant="contained" >
-              <Typography>Upload List of Employee by CSV</Typography>
-            </Button>
-          </Link>
-           </CardActions>
-          </CardContent>
-        </Card>
+        <Grid container spacing={2}>  
+            <Card className={classes.card}>
+                <CardContent>
+                  <Typography variant="h6" className={classes.title}>
+                    Welcome To the Application!
+                  </Typography>
+                  
+        
+                  <Grid item xs= {12}  className={classes.gridItem}>  
+                    <Link to="/form">
+                    <Button color="primary" variant="contained" >
+                      <Typography>Fillup Form </Typography>
+                    </Button>
+                  </Link>
+                  </Grid>
+
+                  <Grid item xs= {12}  className={classes.gridItem}>  
+                    <Link to="/byCsv">
+                    <Button color="primary" variant="contained" >
+                      <Typography>Upload List of Employee by CSV</Typography>
+                    </Button>
+                  </Link>
+                 </Grid>
+                <CardActions >
+               
+              
+                </CardActions>
+                </CardContent>
+              </Card>
+        </Grid>
+       
       )
   }
   

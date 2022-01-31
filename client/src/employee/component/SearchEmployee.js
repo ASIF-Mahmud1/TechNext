@@ -68,7 +68,7 @@ export default function CreateSubCategory() {
 
     }
 
-  return ( <Paper>      
+  return ( <Paper elevation={0}>      
     <Card className={classes.card}>
           <CardContent>
               <Typography variant="h6" className={classes.title}>

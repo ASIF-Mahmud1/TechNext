@@ -7,7 +7,7 @@ import {
   } from "react-router-dom";
   import React, {useState, useEffect} from 'react'
   import {Navigate as Redirect} from 'react-router-dom'
-  import {Button,Typography,TextField,Card,CardActions,CardContent,Icon,} from '@mui/material';
+  import {Button,Typography,TextField,Card,CardActions,CardContent,Icon,Grid} from '@mui/material';
   import {makeStyles}  from '@mui/styles';
   
   
@@ -23,17 +23,8 @@ import {
       margin: theme.spacing(2),
       color: theme.palette.protectedTitle
     },
-    error: {
-      verticalAlign: 'middle'
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 300
-    },
-    submit: {
-      margin: 'auto',
-      marginBottom: theme.spacing(2)
+    gridItem:{
+      marginBottom:20
     }
   }))
   
@@ -43,39 +34,67 @@ import {
   
   
       return (
+        <Grid container spacing={2}>
         <Card className={classes.card}>
-          <CardContent>
+          <CardContent >
             <Typography variant="h6" className={classes.title}>
               Welcome To the Application!
             </Typography>
             
   
-          <CardActions style={{ paddingLeft:120}}>
-           <Link to="/addEmployee">
-            <Button color="primary" variant="contained" >
-              <Typography>Add New Employee</Typography>
-            </Button>
-          </Link>
-          <Link to="/employee">
-            <Button color="primary" variant="contained" >
-              <Typography>Show List of Employee</Typography>
-            </Button>
-          </Link>
-          <Link to="/sendEmail">
-            <Button color="primary" variant="contained" >
-              <Typography>Send Emails</Typography>
-            </Button>
-          </Link>
-          <Link to="/searchEmployee">
-            <Button color="primary" variant="contained" >
-              <Typography>Search Employee</Typography>
-            </Button>
-          </Link>
-           </CardActions>
+            <Grid item xs= {12}  className={classes.gridItem} >  
+              <Link to="/addEmployee">
+              <Button color="primary" variant="contained" >
+                <Typography>Add New Employee</Typography>
+              </Button>
+            </Link>
+            </Grid>
+
+            <Grid item xs= {12}  className={classes.gridItem}>  
+                <Link to="/employee">
+                <Button color="primary" variant="contained" >
+                  <Typography>Show List of Employee</Typography>
+                </Button>
+              </Link>
+            </Grid>
+
+            <Grid item xs= {12}  className={classes.gridItem}>  
+              <Link to="/sendEmail">
+              <Button color="primary" variant="contained" >
+                <Typography>Send Emails</Typography>
+              </Button>
+            </Link>
+            </Grid>
+
+            <Grid item xs= {12}  className={classes.gridItem}>  
+                <Link to="/searchEmployee">
+                <Button color="primary" variant="contained" >
+                  <Typography>Search Employee</Typography>
+                </Button>
+              </Link>
+            </Grid>
+          
           </CardContent>
         </Card>
+        </Grid>
       )
   }
   
   
+  /*  
+      gridItem:{
+      marginBottom:20
+    }
+
+
+
+     <Grid container spacing={2}>  
+     
+     </Grid>
+
+
+    <Grid item xs= {12}  className={classes.gridItem}>  
+
+     </Grid>
   
+  */
