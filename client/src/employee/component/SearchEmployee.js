@@ -11,9 +11,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(5),
     paddingBottom: theme.spacing(2)
   },
-  error: {
-    verticalAlign: 'middle'
-  },
+
   title: {
     marginTop: theme.spacing(2),
     marginBottom:20,

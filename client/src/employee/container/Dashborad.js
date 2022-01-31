@@ -13,7 +13,7 @@ import {
   
   const useStyles = makeStyles(theme => ({
     card: {
-      maxWidth: 600,
+      maxWidth: 1000,
       margin: 'auto',
       textAlign: 'center',
       marginTop: theme.spacing(5),
@@ -34,14 +34,14 @@ import {
   
   
       return (
-        <Grid container spacing={2}>
+       
         <Card className={classes.card}>
           <CardContent >
             <Typography variant="h6" className={classes.title}>
               Welcome To the Application!
             </Typography>
             
-  
+            <Grid container spacing={2}>
             <Grid item xs= {12}  className={classes.gridItem} >  
               <Link to="/addEmployee">
               <Button color="primary" variant="contained" >
@@ -73,10 +73,10 @@ import {
                 </Button>
               </Link>
             </Grid>
-          
+            </Grid>
           </CardContent>
         </Card>
-        </Grid>
+       
       )
   }
   

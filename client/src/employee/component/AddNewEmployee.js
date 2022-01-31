@@ -13,7 +13,7 @@ import {
   
   const useStyles = makeStyles(theme => ({
     card: {
-      maxWidth: 600,
+      maxWidth: 1000,
       margin: 'auto',
       textAlign: 'center',
       marginTop: theme.spacing(5),
@@ -22,18 +22,6 @@ import {
     title: {
       margin: theme.spacing(2),
       color: theme.palette.protectedTitle
-    },
-    error: {
-      verticalAlign: 'middle'
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 300
-    },
-    submit: {
-      margin: 'auto',
-      marginBottom: theme.spacing(2)
     },
     gridItem:{
       marginBottom:20
@@ -46,14 +34,14 @@ import {
   
   
       return (
-        <Grid container spacing={2}>  
+      
             <Card className={classes.card}>
                 <CardContent>
                   <Typography variant="h6" className={classes.title}>
                     Welcome To the Application!
                   </Typography>
                   
-        
+                  <Grid container spacing={2}>  
                   <Grid item xs= {12}  className={classes.gridItem}>  
                     <Link to="/form">
                     <Button color="primary" variant="contained" >
@@ -69,14 +57,15 @@ import {
                     </Button>
                   </Link>
                  </Grid>
+                 </Grid>
+       
                 <CardActions >
                
               
                 </CardActions>
                 </CardContent>
               </Card>
-        </Grid>
-       
+      
       )
   }
   
